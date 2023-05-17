@@ -5,7 +5,7 @@ LARGURA = 500
 
 class Foxbot(pygame.sprite.Sprite):
     def __init__(self, img):
-
+        
         pygame.sprite.Sprite.__init__(self)
         self.image = img
         self.rect = self.image.get_rect()
@@ -14,9 +14,8 @@ class Foxbot(pygame.sprite.Sprite):
         self.speedx = 10
         self.speedy = 10
 
-    def update(self, new_speedx, new_speedy):
-        self.speedx = new_speedx
-        self.speedy = new_speedy
+    def update(self):
+
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
