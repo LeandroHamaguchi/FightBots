@@ -5,7 +5,6 @@ from foxbot import Foxbot
 from bot import Bot
 
 pygame.init()
-pygame.mixer.init()
 
 # dimensoes
 ALTURA = 500
@@ -16,71 +15,66 @@ white = (255, 255, 255)
 blue = (0, 0, 255)
 red = (255, 0, 0)
 
+# assets
+FOXBOT_LARGURA = 20
+FOXBOT_ALTURA = 20
+BOT_LARGURA = 20
+BOT_ALTURA = 20
+background = pygame.image.load('../assets/background.png').convert()
+foxbot_img_0 = pygame.image.load('../assets/foxbot_K_D.png').convert_alpha()
+foxbot_img_0 = pygame.transform.scale(foxbot_img_0,(FOXBOT_LARGURA, FOXBOT_ALTURA))
+foxbot_img_W = pygame.image.load('../assets/foxbot_K_D.png').convert_alpha()
+foxbot_img_W = pygame.transform.scale(foxbot_img_W,(FOXBOT_LARGURA, FOXBOT_ALTURA))
+foxbot_img_A = pygame.image.load('../assets/foxbot_K_D.png').convert_alpha()
+foxbot_img_A = pygame.transform.scale(foxbot_img_A,(FOXBOT_LARGURA, FOXBOT_ALTURA))
+foxbot_img_S = pygame.image.load('../assets/foxbot_K_D.png').convert_alpha()
+foxbot_img_S = pygame.transform.scale(foxbot_img_S,(FOXBOT_LARGURA, FOXBOT_ALTURA))
+bot_img_0 = pygame.image.load('../assets/bot_K_A.png').convert_alpha()
+bot_img_0 = pygame.transform.scale(bot_img_0,(BOT_LARGURA, BOT_ALTURA))
+bot_img_W = pygame.image.load('../assets/bot_K_A.png').convert_alpha()
+bot_img_W = pygame.transform.scale(bot_img_W,(BOT_LARGURA, BOT_ALTURA))
+bot_img_S = pygame.image.load('../assets/bot_K_A.png').convert_alpha()
+bot_img_S = pygame.transform.scale(bot_img_S,(BOT_LARGURA, BOT_ALTURA))
+bot_img_D = pygame.image.load('../assets/bot_K_A.png').convert_alpha()
+bot_img_D = pygame.transform.scale(bot_img_D,(BOT_LARGURA, BOT_ALTURA))
+
 # window settings
 window = pygame.display.set_mode((ALTURA, LARGURA))
-pygame.display.set_caption('Fight In Time')
-background = pygame.image.load('background')
-
-# fontes
-font = pygame.font.SysFont(None, 48)
-texto_intro = font.render('Seja Bem Vindo ao Fight In Time', True, (0, 0, 0))
-
-# propriedades dos personagens
-fox_x = 10
-fox_y = 450
-fox_width = 30
-fox_height = 30
-bot_x = 450
-bot_y = 10
-bot_width = 30
-bot_height = 30
+pygame.display.set_caption('Fight Bots')
+background = pygame.image.load('../assets/background.png')
 
 # personagens e classes
-foxbot = Foxbot(fox_draw)
-bot = Bot(bot_draw)
-foxbot.draw.rect(window, red, (fox_x, fox_y, fox_width, fox_height))
-bot.draw.rect(window, blue, (bot_x, bot_y, bot_width, bot_height))
 
-# plot
-DONE = False
-PLAYING = True
-state = PLAYING
-clock = pygame.time.Clock()
-FPS = 30
+foxbot = Foxbot(foxbot_img_0)
+bot = Bot(bot_img_0)
 
-# main loop do jogo
-while state != DONE:
-    clock.tick(FPS)
+running = True
 
+while running:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            state = DONE
-        elif state == PLAYING:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    state = DONE
-                if event.key == pygame.K_UP:
-                    new_speedx = 0
-                    new_speedy = 10
-                    foxbot.update(new_speedx, new_speedy)
-                if event.key == pygame.K_LEFT:
-                    new_speedx = -10
-                    new_speedy = 0
-                    foxbot.update(new_speedx, new_speedy)
-                if event.key == pygame.K_DOWN:
-                    new_speedx = 0
-                    new_speedy = -10
-                    foxbot.update(new_speedx, new_speedy)
-                if event.key == pygame.K_RIGHT:
-                    new_speedx = 10
-                    new_speedy = 0
-                    foxbot.update(new_speedx, new_speedy)
-
+        if (event.type == pygame.QUIT) or (event.type == pygame.K_ESCAPE):
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_UP:
+                foxbot.speedy += 10
+                Foxbot(foxbot_img_W)
+            if event.type == pygame.K_DOWN:
+                foxbot.speedy -= 10
+                Foxbot(foxbot_img_S)
+            if event.type == pygame.K_RIGHT:
+                foxbot.speedx += 10
+                Foxbot(foxbot_img_0)
+            if event.type == pygame.K_LEFT:
+                foxbot.speedx -= 10
+                Foxbot(foxbot_img_A)
+    
     bot.update()
 
     window.fill(white)
+    window.blit(background, (0, 0))
 
-    
+    foxbot.draw(window)
+    bot.draw(window)
 
     pygame.display.update()
 
