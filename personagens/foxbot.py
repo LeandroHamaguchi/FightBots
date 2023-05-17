@@ -5,7 +5,9 @@ LARGURA = 500
 
 class Foxbot(pygame.sprite.Sprite):
     def __init__(self, img):
-        self.img = img
+
+        pygame.sprite.Sprite.__init__(self)
+        self.image = img
         self.rect = self.image.get_rect()
         self.rect.centerx = LARGURA - 480
         self.rect.bottom = ALTURA / 2
