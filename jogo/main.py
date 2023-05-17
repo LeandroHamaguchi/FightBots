@@ -18,28 +18,40 @@ red = (255, 0, 0)
 
 # window settings
 window = pygame.display.set_mode((ALTURA, LARGURA))
-pygame.display.set_caption('Fight In Time')
+pygame.display.set_caption('Fight Bots')
 background = pygame.image.load('background')
 
 # fontes
 font = pygame.font.SysFont(None, 48)
-texto_intro = font.render('Seja Bem Vindo ao Fight In Time', True, (0, 0, 0))
+texto_intro = font.render('Seja Bem Vindo a Fight Bots!', True, (0, 0, 0))
 
 # propriedades dos personagens
 fox_x = 10
-fox_y = 450
-fox_width = 30
-fox_height = 30
+fox_y = 250
+fox1_width = 10
+fox1_height = 10
+fox2_width = 10
+fox2_height = 10
+
 bot_x = 450
-bot_y = 10
-bot_width = 30
-bot_height = 30
+bot_y = 250
+bot1_width = 10
+bot1_height = 10
+bot2_width = 10
+bot2_height = 10
 
 # personagens e classes
-foxbot = Foxbot(fox_draw)
-bot = Bot(bot_draw)
-foxbot.draw.rect(window, red, (fox_x, fox_y, fox_width, fox_height))
-bot.draw.rect(window, blue, (bot_x, bot_y, bot_width, bot_height))
+foxbot1 = Foxbot(fox_draw)
+bot1 = Bot(bot_draw)
+foxbot2 = Foxbot(fox_draw)
+bot2 = Bot(bot_draw)
+
+foxbot1.draw.rect(window, red, (fox_x, fox_y, fox1_width, fox1_height))
+bot1.draw.rect(window, blue, (bot_x, bot_y, bot1_width, bot1_height))
+foxbot2.draw.rect(window,blue, (fox_x, fox_y, fox2_width, fox2_height))
+bot2.draw.rect(window,red, (bot_x, bot_y, bot2_width, bot2_height))
+
+
 
 # plot
 DONE = False
