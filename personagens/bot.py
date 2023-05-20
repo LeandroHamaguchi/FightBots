@@ -5,18 +5,16 @@ LARGURA = 500
 
 class Bot(pygame.sprite.Sprite):
     def __init__(self, img):
-        #imagem do bot(Sprite)
         pygame.sprite.Sprite.__init__(self)
-
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = LARGURA - 20
+        self.rect.centerx = LARGURA - 60
         self.rect.bottom = ALTURA / 2
         self.speedx = 10
         self.speedy = 10
 
-    def update(self):
+    def update(self): 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
@@ -24,5 +22,3 @@ class Bot(pygame.sprite.Sprite):
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
-
-        return self.img
