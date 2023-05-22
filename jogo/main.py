@@ -20,10 +20,10 @@ blue = (0, 0, 255)
 red = (255, 0, 0)
 
 # assets
-FOXBOT_LARGURA = 80
-FOXBOT_ALTURA = 80
-BOT_LARGURA = 80
-BOT_ALTURA = 80
+FOXBOT_LARGURA = 100
+FOXBOT_ALTURA = 100
+BOT_LARGURA = 75
+BOT_ALTURA = 75
 background = pygame.image.load('assets/background.png').convert()
 foxbot_img_0 = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
 foxbot_img_0 = pygame.transform.scale(foxbot_img_0,(FOXBOT_LARGURA, FOXBOT_ALTURA))
@@ -53,8 +53,11 @@ sprites.add(bot)
 running = True
 while running:
     for event in pygame.event.get():
-        if (event.type == pygame.QUIT) or (event.type == pygame.K_ESCAPE):
+        if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_ESCAPE:
+                running = False
         if running == True:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w:

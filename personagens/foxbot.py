@@ -1,7 +1,7 @@
 import pygame
 
 ALTURA = 500
-LARGURA = 500
+LARGURA = 850
 
 class Foxbot(pygame.sprite.Sprite):
     def __init__(self, img):
