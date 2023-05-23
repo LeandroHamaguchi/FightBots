@@ -43,3 +43,4 @@ bot_img_D = pygame.image.load('assets/bot_K_A.png').convert_alpha()
 bot_img_D = pygame.transform.scale(bot_img_D,(BOT_LARGURA, BOT_ALTURA))
 
 
+Fox_imgs=[foxbot_img_W,foxbot_img_S,foxbot_img_A,foxbot_img_0]

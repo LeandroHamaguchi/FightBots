@@ -24,9 +24,10 @@ class Foxbot(pygame.sprite.Sprite):
             self.rect.left = 0
             
         #Colisão com a altura
+        if self.rect.y > ALTURA:
+            self.rect.y = ALTURA-90
         if self.rect.y < 0:
             self.rect.y = 0
-        elif self.rect.y > ALTURA:
-            self.rect.y = ALTURA
+        
 
 

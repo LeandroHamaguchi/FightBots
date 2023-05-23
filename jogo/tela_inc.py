@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 font=pygame.font.SysFont(None,235)
 texto=font.render('FIGHT BOTS',True,white)
 musica_fundo=pygame.mixer.music.load('assets/sons/stomping-rock-four-shots-111444.mp3')
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play()
 def game_intro(screen):
 
