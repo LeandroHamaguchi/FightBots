@@ -27,7 +27,7 @@ while state != QUIT:
 
                 if running == True:
                     if event.type == pygame.KEYDOWN:
-                        if event.type == pygame.K_ESCAPE:
+                        if event.key == pygame.K_ESCAPE:
                             pygame.QUIT()
                         if event.key == pygame.K_w:
                             foxbot.speedy = 0
