@@ -4,7 +4,7 @@ import bot as bot
 from tela_inc import game_intro
 from configuracoes import *
 pygame.init()
-
+pygame.mixer.init()
 
 # personagens e classes
 foxbot = foxbot.Foxbot(foxbot_img_0)
