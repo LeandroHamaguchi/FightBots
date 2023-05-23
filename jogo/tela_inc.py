@@ -1,30 +1,33 @@
 import pygame
 import sys
-from main import *
-
+from configuracoes import window,START,QUIT
 pygame.font.init()
-pygame.font.quit()
+white = (255,255,255)
+black = (0,0,0)
+clock = pygame.time.Clock()
+font=pygame.font.SysFont(None,248)
+texto=font.render('fight bots ',True,white)
 
-Black=(0,0,0)
+def game_intro(screen):
 
-def text_objects(texto, fonte):
-    introducao = fonte.render(texto, True, Black)
-    return introducao, introducao.get_rect()
-
-def game_intro():
 
     inicio = True
-
     while inicio:
+
+        clock.tick(60)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+                state = QUIT
+                inicio = False
+
+            if event.type == pygame.KEYUP:
+                state = START
+                inicio = False
                 
-        window.fill(Black)
-        largeText = pygame.font.Font('arial',24)
-        introducao = text_objects("Fight Bots", largeText)
-        introducao.center = (((0)),(LARGURA/2))
-        window.blit(introducao)
-        pygame.display.update()
-        clock.tick(15)
+        window.fill(black)
+        window.blit(texto,(100,100))
+        
+        pygame.display.flip()
+
+    return state
