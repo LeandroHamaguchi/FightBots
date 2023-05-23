@@ -1,7 +1,6 @@
 import pygame
+from configuracoes import ALTURA,LARGURA
 
-ALTURA = 500
-LARGURA = 850
 
 class Foxbot(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -9,8 +8,8 @@ class Foxbot(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = LARGURA - 440
-        self.rect.bottom = ALTURA / 2
+        self.rect.centerx = 50
+        self.rect.bottom = ALTURA/2 +50
         self.speedx = 0
         self.speedy = 0
 
@@ -18,8 +17,16 @@ class Foxbot(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
+        #Colisão com a largura
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
+            
+        #Colisão com a altura
+        if self.rect.y < 0:
+            self.rect.y = 0
+        elif self.rect.y > ALTURA:
+            self.rect.y = ALTURA
+
 

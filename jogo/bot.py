@@ -1,9 +1,7 @@
 import pygame
 from foxbot import Foxbot
+from configuracoes import ALTURA,LARGURA
 
-ALTURA = 500
-LARGURA = 850
-window = pygame.display.set_mode((ALTURA, LARGURA))
 
 foxbot_img_0 = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
 foxbot = Foxbot(foxbot_img_0)
@@ -44,8 +42,8 @@ class Bot(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = LARGURA - 60
-        self.rect.bottom = ALTURA / 2
+        self.rect.centerx = 1000
+        self.rect.bottom = 420
         self.speedx = 10
         self.speedy = 10
 
@@ -74,3 +72,4 @@ class Bot(pygame.sprite.Sprite):
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
+        

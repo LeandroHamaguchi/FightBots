@@ -24,11 +24,11 @@ while state != QUIT:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                if event.type == pygame.KEYDOWN:
-                    if event.type == pygame.K_ESCAPE:
-                        running = False
+
                 if running == True:
                     if event.type == pygame.KEYDOWN:
+                        if event.type == pygame.K_ESCAPE:
+                            pygame.QUIT()
                         if event.key == pygame.K_w:
                             foxbot.speedy = 0
                             foxbot.speedy -= 15
@@ -56,7 +56,7 @@ while state != QUIT:
             
             bot.update()
 
-            window.fill(white)
+
             window.blit(background, (0, 0))
 
             sprites.draw(window)
@@ -65,3 +65,4 @@ while state != QUIT:
             pygame.display.update()
 
         pygame.quit()
+        state=QUIT

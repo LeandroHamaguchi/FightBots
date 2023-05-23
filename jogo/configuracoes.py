@@ -3,14 +3,14 @@ import pygame
 
 
 # dimensoes
-LARGURA = 500
-ALTURA = 850
+ALTURA = 750
+LARGURA = 1000
 #começo e fim da tela inicial
 INIT=0
 QUIT=1
 START=2
 # window settings
-window = pygame.display.set_mode((ALTURA, LARGURA))
+window = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption('Fight Bots')
 
 # cores
@@ -21,9 +21,10 @@ red = (255, 0, 0)
 # assets
 FOXBOT_LARGURA = 100
 FOXBOT_ALTURA = 100
-BOT_LARGURA = 75
-BOT_ALTURA = 75
+BOT_LARGURA = 90
+BOT_ALTURA = 90
 background = pygame.image.load('assets/background.png').convert()
+background = pygame.transform.scale(background,(LARGURA,ALTURA))
 foxbot_img_0 = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
 foxbot_img_0 = pygame.transform.scale(foxbot_img_0,(FOXBOT_LARGURA, FOXBOT_ALTURA))
 foxbot_img_W = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
@@ -40,3 +41,5 @@ bot_img_S = pygame.image.load('assets/bot_K_A.png').convert_alpha()
 bot_img_S = pygame.transform.scale(bot_img_S,(BOT_LARGURA, BOT_ALTURA))
 bot_img_D = pygame.image.load('assets/bot_K_A.png').convert_alpha()
 bot_img_D = pygame.transform.scale(bot_img_D,(BOT_LARGURA, BOT_ALTURA))
+
+
