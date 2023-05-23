@@ -5,7 +5,7 @@ pygame.font.init()
 white = (255,255,255)
 black = (0,0,0)
 clock = pygame.time.Clock()
-font=pygame.font.SysFont(None,248)
+font=pygame.font.SysFont(None,235)
 texto=font.render('FIGHT BOTS',True,white)
 
 def game_intro(screen):
@@ -26,7 +26,7 @@ def game_intro(screen):
                 inicio = False
                 
         window.fill(black)
-        window.blit(texto,(100,10))
+        window.blit(texto,(0,10))
         
         pygame.display.flip()
 
