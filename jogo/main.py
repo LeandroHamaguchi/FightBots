@@ -65,3 +65,5 @@ while state != QUIT:
 
         pygame.quit()
         state=QUIT
+    
+pygame.quit()
