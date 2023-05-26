@@ -1,7 +1,5 @@
 import pygame
 
-
-
 # dimensoes
 ALTURA = 750
 LARGURA = 1000
