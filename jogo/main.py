@@ -4,13 +4,17 @@ import bot as bot
 from tela_inc import game_intro
 from configuracoes import *
 pygame.init()
-
+from pygame.locals import *
+from foxbot import Bala
 # personagens e classes
 foxbot = foxbot.Foxbot(foxbot_img_0)
 bot = bot.Bot(bot_img_0)
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
+balaProjetil=Bala(LARGURA / 2 , ALTURA - 60)
+listaBalas=[]
+
 
 # loop principal do jogo
 running=True
@@ -20,6 +24,7 @@ while state != QUIT:
         state=  game_intro(window)
     elif state==START:
         while running:
+            balaProjetil.percurso()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -52,14 +57,23 @@ while state != QUIT:
                             foxbot.speedy = 0
                             foxbot.update()
                             #Foxbot(foxbot_img_A)
+  
+                    if event.type == MOUSEBUTTONDOWN:
+                       x,y = foxbot.rect.center
+                       foxbot.fire(x+45,y-5) 
+                                       
             
             bot.update()
 
 
             window.blit(background, (0, 0))
-
+            balaProjetil.insert(window)
             sprites.draw(window)
             sprites.draw(window)
+            if len(foxbot.listaBalas) > 0:
+                for x in foxbot.listaBalas:
+                    x.insert(window)
+                    x.percurso()
 
             pygame.display.update()
 

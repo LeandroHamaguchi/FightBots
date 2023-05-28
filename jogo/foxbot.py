@@ -1,5 +1,6 @@
 import pygame
-from configuracoes import ALTURA,LARGURA
+from configuracoes import ALTURA,LARGURA,bala_player
+from pygame.locals import *
 
 
 class Foxbot(pygame.sprite.Sprite):
@@ -12,6 +13,7 @@ class Foxbot(pygame.sprite.Sprite):
         self.rect.bottom = ALTURA/2 +50
         self.speedx = 0
         self.speedy = 0
+        self.listaBalas=[]
 
     def update(self):
         self.rect.x += self.speedx
@@ -28,6 +30,27 @@ class Foxbot(pygame.sprite.Sprite):
             self.rect.y = ALTURA-90
         if self.rect.y < 0:
             self.rect.y = 0
+
+    def fire(self,x,y):
+            Tiro=Bala(x,y)
+            self.listaBalas.append(Tiro)
         
 
+   
 
+class Bala(pygame.sprite.Sprite):
+    def __init__(self,posx,posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.listaBalas=[]
+        self.ImgBala=pygame.transform.rotate(bala_player,-90)
+
+        self.rect = self.ImgBala.get_rect()
+        self.speedBala = 1
+        self.rect.top = posy
+        self.rect.left = posx
+
+    def percurso(self):
+        self.rect.x += self.speedBala
+    
+    def insert(self,superficie):
+        superficie.blit(self.ImgBala, self.rect)
