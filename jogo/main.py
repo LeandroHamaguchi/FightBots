@@ -67,7 +67,6 @@ while state != QUIT:
 
 
             window.blit(background, (0, 0))
-            balaProjetil.insert(window)
             sprites.draw(window)
             sprites.draw(window)
             if len(foxbot.listaBalas) > 0:
