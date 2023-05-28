@@ -43,14 +43,24 @@ class Bala(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.listaBalas=[]
         self.ImgBala=pygame.transform.rotate(bala_player,-90)
-
         self.rect = self.ImgBala.get_rect()
         self.speedBala = 1
         self.rect.top = posy
         self.rect.left = posx
 
-    def percurso(self):
-        self.rect.x += self.speedBala
+    def percurso(self,W,A,S,D):
+        if W == 1:
+            self.rect.top = self.rect.top-self.speedBala
+            self.ImgBala=bala_player
+        if S == 1:
+            self.rect.top = self.rect.top+self.speedBala
+            self.ImgBala=bala_player
+        if A == 1:
+            self.rect.x -= self.speedBala
+            self.ImgBala=pygame.transform.rotate(bala_player,-90)
+        if D == 1:
+            self.rect.x += self.speedBala
+            self.ImgBala=pygame.transform.rotate(bala_player,-90)
     
     def insert(self,superficie):
         superficie.blit(self.ImgBala, self.rect)
