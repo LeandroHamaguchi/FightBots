@@ -31,6 +31,15 @@ background = pygame.transform.scale(background,(LARGURA,ALTURA))
 foxbot_img = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
 foxbot_img = pygame.transform.scale(foxbot_img,(FOXBOT_LARGURA, FOXBOT_ALTURA))
 
+Tela_Inicial = pygame.image.load('assets/Tela_Intro.jpg').convert()
+Tela_Inicial = pygame.transform.scale(Tela_Inicial,(LARGURA,ALTURA))
+Tela_Start = pygame.image.load('assets/Tela_sel_Start.jpg').convert()
+Tela_Start = pygame.transform.scale(Tela_Start,(LARGURA,ALTURA))
+Tela_Instrucoes = pygame.image.load('assets/Tela_instrucoes.jpg').convert()
+Tela_Instrucoes = pygame.transform.scale(Tela_Instrucoes,(LARGURA,ALTURA))
+
+
+
 bot_img_0 = pygame.image.load('assets/bot_K_A.png').convert_alpha()
 bot_img_0 = pygame.transform.scale(bot_img_0,(BOT_LARGURA, BOT_ALTURA))
 bot_img_W = pygame.image.load('assets/bot_K_A.png').convert_alpha()

@@ -1,5 +1,5 @@
 import pygame
-
+from configuracoes import Tela_Inicial
 import sys
 pygame.mixer.init()
 from configuracoes import window,START,QUIT
@@ -30,7 +30,7 @@ def game_intro(screen):
                 inicio = False
                 
         window.fill(black)
-        window.blit(texto,(0,10))
+        window.blit(Tela_Inicial,(0,0))
 
         
         pygame.display.flip()
