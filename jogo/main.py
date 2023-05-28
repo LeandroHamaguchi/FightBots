@@ -7,7 +7,7 @@ pygame.init()
 from pygame.locals import *
 from foxbot import Bala
 # personagens e classes
-foxbot = foxbot.Foxbot(foxbot_img_0)
+foxbot = foxbot.Foxbot(foxbot_img)
 bot = bot.Bot(bot_img_0)
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
@@ -37,26 +37,30 @@ while state != QUIT:
                             foxbot.speedy = 0
                             foxbot.speedy -= 15
                             foxbot.speedx = 0
+                            foxbot.image=pygame.transform.rotate(foxbot_img,+90)
                             foxbot.update()
-                            #Foxbot(foxbot_img_W)
+                            #Foxbot(tecla W)
                         if event.key == pygame.K_s:
                             foxbot.speedy = 0
                             foxbot.speedy += 15
                             foxbot.speedx = 0
+                            foxbot.image=pygame.transform.rotate(foxbot_img,-90)
                             foxbot.update()
-                            #Foxbot(foxbot_img_S)
+                            #Foxbot(tecla S)
                         if event.key == pygame.K_a:
                             foxbot.speedx = 0
                             foxbot.speedx -= 15
                             foxbot.speedy = 0
+                            foxbot.image=pygame.transform.rotate(foxbot_img,-180)
                             foxbot.update()
-                            #Foxbot(foxbot_img_0)
+                            #Foxbot(tecla A )
                         if event.key == pygame.K_d:
                             foxbot.speedx = 0
                             foxbot.speedx += 15
                             foxbot.speedy = 0
+                            foxbot.image=foxbot_img
                             foxbot.update()
-                            #Foxbot(foxbot_img_A)
+                            #Foxbot(tecla D)
   
                     if event.type == MOUSEBUTTONDOWN:
                        x,y = foxbot.rect.center
