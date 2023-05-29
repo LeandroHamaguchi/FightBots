@@ -15,9 +15,9 @@ class Bot(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = 1000
+        self.rect.centerx = 887.5
         self.rect.bottom = 420
-        self.speedx = 1
+        self.speedx = 0
         self.speedy = 1
         self.direcao_x=0
         self.direcao_y=0
@@ -106,7 +106,7 @@ balaProjetil_Inimigo=Bala(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,b
 
 
 #timer dos tiros do bot
-pygame.time.set_timer(pygame.USEREVENT,400)  # evento a cada 400 milisegundos
+pygame.time.set_timer(pygame.USEREVENT,1000)  # evento a cada 400 milisegundos
 
 # loop principal do jogo
 running=True

@@ -9,10 +9,9 @@ class Foxbot(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = 50
+        self.rect.centerx = 112.5
         self.rect.bottom = ALTURA/2 +50
-        self.speedx = 0
-        self.speedy = 0
+        self.speedy = 1
         self.listaBalas=[]
         self.W=W
         self.A=A
@@ -20,20 +19,15 @@ class Foxbot(pygame.sprite.Sprite):
         self.D=D
 
     def update(self):
-        self.rect.x += self.speedx
+        self.rect.x = 112.5-50
         self.rect.y += self.speedy
 
-        #Colisão com a largura
-        if self.rect.right > LARGURA:
-            self.rect.right = LARGURA
-        if self.rect.left < 0:
-            self.rect.left = 0
             
         #Colisão com a altura
-        if self.rect.y > ALTURA:
-            self.rect.y = ALTURA-90
-        if self.rect.y < 0:
-            self.rect.y = 0
+        if self.rect.y > ALTURA-185:
+            self.rect.y = ALTURA-185
+        if self.rect.y < 85:
+            self.rect.y = 85
 
     def fire(self,x,y):
             Tiro=Bala(x,y,bala_player,self.W,self.A,self.S,self.D)
@@ -56,18 +50,15 @@ class Bala(pygame.sprite.Sprite):
 
     def percurso(self,imagem):
         if self.W == 1:
-            self.rect.y -= self.speedBala
-            self.ImgBala=imagem
+            self.rect.x += self.speedBala
         if self.S == 1:
-            self.rect.y += self.speedBala
-            self.ImgBala=imagem
+            self.rect.x += self.speedBala
         if self.A == 1:
-            self.rect.x -= self.speedBala
-            self.ImgBala=pygame.transform.rotate(imagem,-90)
+            self.rect.x += self.speedBala
+
         if self.D == 1:
             self.rect.x += self.speedBala
-            self.ImgBala=pygame.transform.rotate(imagem,-90)
-    
+        self.ImgBala=pygame.transform.rotate(imagem,-90)
     def insert(self,superficie):
         superficie.blit(self.ImgBala, self.rect)
     
