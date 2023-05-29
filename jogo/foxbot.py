@@ -32,26 +32,26 @@ class Foxbot(pygame.sprite.Sprite):
             self.rect.y = 0
 
     def fire(self,x,y):
-            Tiro=Bala(x,y)
+            Tiro=Bala(x,y,bala_player)
             self.listaBalas.append(Tiro)
         
 
    
 
 class Bala(pygame.sprite.Sprite):
-    def __init__(self,posx,posy):
+    def __init__(self,posx,posy,imagem):
         pygame.sprite.Sprite.__init__(self)
         self.listaBalas=[]
-        self.ImgBala=pygame.transform.rotate(bala_player,-90)
+        self.ImgBala=pygame.transform.rotate(imagem,-90)
         self.rect = self.ImgBala.get_rect()
         self.speedBala = 1
         self.rect.top = posy
         self.rect.left = posx
 
-    def percurso(self,W,A,S,D):
+    def percurso(self,W,A,S,D,imagem):
         if W == 1:
             self.rect.top = self.rect.top-self.speedBala
-            self.ImgBala=bala_player
+            self.ImgBala=imagem
         if S == 1:
             self.rect.top = self.rect.top+self.speedBala
             self.ImgBala=bala_player

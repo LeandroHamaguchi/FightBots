@@ -10,6 +10,12 @@ clock=pygame.time.Clock()
 
 FPS= 60
 
+
+
+# personagens e classes
+
+listaBalas_Inimigo=[]
+listaBalas=[]
 #bot loop
 class Bot(pygame.sprite.Sprite):
     
@@ -24,6 +30,7 @@ class Bot(pygame.sprite.Sprite):
         self.speedy = 2
         self.direcao_x=0
         self.direcao_y=0
+        self.listaBalas_Inimigo=[]
     def bussola(self,x_bot, y_bot, x_foxbot, y_foxbot): 
         if (abs(x_foxbot - x_bot) > abs(y_foxbot - y_bot)):
           if (y_foxbot > y_bot):
@@ -61,16 +68,31 @@ class Bot(pygame.sprite.Sprite):
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
+          #Colisão com a largura
+        if self.rect.right > LARGURA:
+            self.rect.right = LARGURA
+        if self.rect.left < 0:
+            self.rect.left = 0
+            
+        #Colisão com a altura
+        if self.rect.y > ALTURA:
+            self.rect.y = ALTURA-90
+        if self.rect.y < 0:
+            self.rect.y = 0
+
+    def fire(self,x,y):
+            Tiro=Bala(x,y,bala_bot)
+            self.listaBalas_Inimigo.append(Tiro)
 
 
-# personagens e classes
 foxbot = foxbot.Foxbot(foxbot_img)
 bot = Bot(bot_img_0)
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
-balaProjetil=Bala(LARGURA / 2 , ALTURA - 60)
-listaBalas=[]
+balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player)
+balaProjetil_Inimigo=Bala(LARGURA / 2 , ALTURA - 60,bala_bot)
+
 W=0
 A=0
 S=0
@@ -87,7 +109,8 @@ while state != QUIT:
     elif state==START:
         while running:
             clock.tick(FPS)
-            balaProjetil.percurso(W,A,S,D )
+            balaProjetil.percurso(W,A,S,D,bala_player )
+            balaProjetil_Inimigo.percurso(W,A,S,D,bala_bot)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -145,7 +168,8 @@ while state != QUIT:
                        x,y = foxbot.rect.center
                        foxbot.fire(x+45,y-5) 
 
-                                 
+            x,y = bot.rect.center
+            bot.fire(x+45,y-5)                      
             bot.bussola(bot.rect.x,bot.rect.y,foxbot.rect.x,foxbot.rect.y)
             bot.update()
 
@@ -153,11 +177,16 @@ while state != QUIT:
             window.blit(background, (0, 0))
             sprites.draw(window)
             sprites.draw(window)
+            #tiros do jogador
             if len(foxbot.listaBalas) > 0:
                 for x in foxbot.listaBalas:
                     x.insert(window)
-                    x.percurso(W,A,S,D)
-
+                    x.percurso(W,A,S,D,bala_player)
+            #tiros do bot
+            if len(bot.listaBalas_Inimigo) > 0:
+                for b in bot.listaBalas_Inimigo:
+                    b.insert(window)
+                    b.percurso(W,A,S,D,bala_bot)
             pygame.display.update()
 
         pygame.quit()
