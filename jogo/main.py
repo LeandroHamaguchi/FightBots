@@ -46,16 +46,31 @@ class Bot(pygame.sprite.Sprite):
         if self.direcao_y == 'norte':
             self.rect.y -= self.speedy
             bot.image=pygame.transform.rotate(bot_img,+90)
+            bot.W=1
+            bot.A=0
+            bot.S=0
+            bot.D=0            
         elif self.direcao_y == 'sul':
             self.rect.y += self.speedy 
             bot.image=pygame.transform.rotate(bot_img,-90)
+            bot.W=0
+            bot.A=0
+            bot.S=1
+            bot.D=0 
         if self.direcao_x == 'leste':
             self.rect.x += self.speedx
             bot.image=pygame.transform.rotate(bot_img,+180)
+            bot.W=0
+            bot.A=0
+            bot.S=0
+            bot.D=1 
         elif self.direcao_x == 'oeste':
             self.rect.x -= self.speedx
             bot.image=bot_img
-
+            bot.W=0
+            bot.A=1
+            bot.S=0
+            bot.D=0 
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
         if self.rect.left < 0:
@@ -160,7 +175,7 @@ while state != QUIT:
                             foxbot.W=0
                             foxbot.A=0
                             foxbot.S=1
-                            foxbot.D=0                            
+                            foxbot.D=0                         
                             #Foxbot(tecla S)
                         if event.key == pygame.K_a:
                             foxbot.speedx = 0
@@ -171,7 +186,8 @@ while state != QUIT:
                             foxbot.W=0
                             foxbot.A=1
                             foxbot.S=0
-                            foxbot.D=0                            
+                            foxbot.D=0
+                                                  
                             #Foxbot(tecla A )
                         if event.key == pygame.K_d:
                             foxbot.speedx = 0
