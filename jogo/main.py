@@ -8,6 +8,27 @@ from pygame.locals import *
 clock=pygame.time.Clock()
 
 # classe Bot
+class Bala_Bot(pygame.sprite.Sprite):
+    def __init__(self,posx,posy,imagem,W,S,A,D):
+        pygame.sprite.Sprite.__init__(self)
+        self.listaBalas=[]
+        self.ImgBala=pygame.transform.rotate(imagem,-90)
+        self.rect = self.ImgBala.get_rect(center=(posx,posy))
+        self.speedBala = 3
+        self.W=W
+        self.A=A
+        self.S=S
+        self.D=D
+
+    def percurso(self,imagem):
+        if self.W == 1:
+            self.rect.x -= self.speedBala
+        if self.S == 1:
+            self.rect.x -= self.speedBala
+        self.ImgBala=pygame.transform.rotate(imagem,-90)
+    def insert(self,superficie):
+        superficie.blit(self.ImgBala, self.rect)
+
 class Bot(pygame.sprite.Sprite):
     
     def __init__(self, img):
@@ -45,14 +66,14 @@ class Bot(pygame.sprite.Sprite):
             bot.S=0
             bot.D=0            
         if self.direcao_y == 'sul':
-            self.rect.y += self.speedy 
+            self.rect.y -= self.speedy 
             bot.image=pygame.transform.rotate(bot_img,-90)
             bot.W=0
             bot.A=0
             bot.S=1
             bot.D=0 
         if self.direcao_x == 'leste':
-            self.rect.x += self.speedx
+            self.rect.x -= self.speedx
             bot.image=pygame.transform.rotate(bot_img,+180)
             bot.W=0
             bot.A=0
@@ -82,7 +103,7 @@ class Bot(pygame.sprite.Sprite):
             self.rect.y = 0
     
     def fire(self,x,y):
-            Tiro=Bala(x,y,bala_player,self.W,self.A,self.S,self.D)
+            Tiro=Bala_Bot(x,y,bala_player,self.W,self.A,self.S,self.D)
             self.listaBalas_Inimigo.append(Tiro)
 
 
@@ -101,12 +122,12 @@ sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
 
-balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,A_inicial,S_inicial,D_inicial)
-balaProjetil_Inimigo=Bala(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,bot.A)
+balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,S_inicial,A_inicial,D_inicial)
+balaProjetil_Inimigo=Bala_Bot(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,bot.A)
 
 
 #timer dos tiros do bot
-pygame.time.set_timer(pygame.USEREVENT,1000)  # evento a cada 400 milisegundos
+pygame.time.set_timer(pygame.USEREVENT,2000)  # evento a cada 400 milisegundos
 
 # loop principal do jogo
 running=True
@@ -189,14 +210,12 @@ while state != QUIT:
             sprites.draw(window)
             sprites.draw(window)
             #tiros do jogador
-            if len(foxbot.listaBalas) > 0:
-                for x in foxbot.listaBalas:
+            for x in foxbot.listaBalas:
                     x.insert(window)
                     x.percurso(bala_player)
 
             #tiros do bot
-            if len(bot.listaBalas_Inimigo) > 0:
-                for b in bot.listaBalas_Inimigo:
+            for b in bot.listaBalas_Inimigo:
                     b.insert(window)
                     b.percurso(bala_bot)
             pygame.display.update()

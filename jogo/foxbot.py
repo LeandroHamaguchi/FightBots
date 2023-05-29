@@ -61,4 +61,4 @@ class Bala(pygame.sprite.Sprite):
         self.ImgBala=pygame.transform.rotate(imagem,-90)
     def insert(self,superficie):
         superficie.blit(self.ImgBala, self.rect)
-    
+
