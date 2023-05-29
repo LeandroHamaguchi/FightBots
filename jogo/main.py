@@ -108,6 +108,8 @@ bot.A=0
 
 # spawn do player
 foxbot = foxbot.Foxbot(foxbot_img,W_inicial,A_inicial,S_inicial,D_inicial)
+
+#sprites
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
@@ -116,8 +118,9 @@ balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,A_inicial,S_in
 balaProjetil_Inimigo=Bala(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,bot.A)
 
 
+#timer dos tiros do bot
+pygame.time.set_timer(pygame.USEREVENT,400)  # evento a cada 400 milisegundos
 
-pygame.time.set_timer(pygame.USEREVENT,400)  # evento a cada 200 milisegundos
 # loop principal do jogo
 running=True
 state= INIT
