@@ -23,24 +23,18 @@ class Bot(pygame.sprite.Sprite):
         self.direcao_y=0
         self.listaBalas_Inimigo=[]
     def bussola(self,x_bot, y_bot, x_foxbot, y_foxbot): 
-        if (abs(x_foxbot - x_bot) > abs(y_foxbot - y_bot)):
-          if (y_foxbot > y_bot):
+        if (y_foxbot > y_bot):
             self.direcao_y= "sul"
-          elif (y_foxbot < y_bot):
+        elif (y_foxbot < y_bot):
             self.direcao_y= "norte"
         if (x_foxbot > x_bot):
               self.direcao_x= "leste"
-        else:
+        elif (x_foxbot < x_bot):
               self.direcao_x= "oeste"
-        if (abs(x_foxbot - x_bot) < abs(y_foxbot - y_bot)):
-          if (x_foxbot > x_bot):
+        if (x_foxbot > x_bot):
             self.direcao_x= "leste"
-          elif (x_foxbot < x_bot):
+        elif (x_foxbot < x_bot):
             self.direcao_x= "oeste"
-            if (y_foxbot > y_bot):
-              self.direcao_y= "sul"
-            else:
-              self.direcao_y= "norte"
     def update(self): 
         
         if self.direcao_y == 'norte':
@@ -50,7 +44,7 @@ class Bot(pygame.sprite.Sprite):
             bot.A=0
             bot.S=0
             bot.D=0            
-        elif self.direcao_y == 'sul':
+        if self.direcao_y == 'sul':
             self.rect.y += self.speedy 
             bot.image=pygame.transform.rotate(bot_img,-90)
             bot.W=0
@@ -64,7 +58,7 @@ class Bot(pygame.sprite.Sprite):
             bot.A=0
             bot.S=0
             bot.D=1 
-        elif self.direcao_x == 'oeste':
+        if self.direcao_x == 'oeste':
             self.rect.x -= self.speedx
             bot.image=bot_img
             bot.W=0
@@ -87,28 +81,6 @@ class Bot(pygame.sprite.Sprite):
         if self.rect.y < 0:
             self.rect.y = 0
     
-
-    def direcao(self):
-        if self.direcao_y == 'norte':
-            self.W=1
-            self.S=0
-            self.D=0
-            self.A=0
-        elif self.direcao_y == 'sul':
-            self.W=0
-            self.S=1
-            self.D=0
-            self.A=0
-        if self.direcao_x == 'leste':
-            self.W=0
-            self.S=0
-            self.D=1
-            self.A=0
-        elif self.direcao_x == 'oeste':
-            self.W=0
-            self.S=0
-            self.D=0
-            self.A=1
     def fire(self,x,y):
             Tiro=Bala(x,y,bala_player,self.W,self.A,self.S,self.D)
             self.listaBalas_Inimigo.append(Tiro)
@@ -209,7 +181,6 @@ while state != QUIT:
                     if event.type == pygame.USEREVENT:
                         x,y = bot.rect.center                     
                         bot.bussola(bot.rect.x,bot.rect.y,foxbot.rect.x,foxbot.rect.y)
-                        bot.direcao
                         bot.fire(x+45,y-5) 
                 bot.update()
 
