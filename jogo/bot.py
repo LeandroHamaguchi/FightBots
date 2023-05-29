@@ -6,35 +6,7 @@ from configuracoes import ALTURA,LARGURA
 foxbot_img_0 = pygame.image.load('assets/foxbot_K_D.png').convert_alpha()
 foxbot = Foxbot(foxbot_img_0)
 
-def bussola(x_bot, y_bot, x_foxbot, y_foxbot): 
-  if ((x_foxbot == x_bot) and (y_foxbot == y_bot)):
-    return "achou"
-  else:
-    if (abs(x_foxbot - x_bot) > abs(y_foxbot - y_bot)):
-      if (y_foxbot > y_bot):
-        return "sul"
-      elif (y_foxbot < y_bot):
-        return "norte"
-      else: 
-        if (x_foxbot > x_bot):
-          return "leste"
-        else:
-          return "oeste"
-    elif (abs(x_foxbot - x_bot) < abs(y_foxbot - y_bot)):
-      if (x_foxbot > x_bot):
-        return "leste"
-      elif (x_foxbot < x_bot):
-        return "oeste"
-      else:
-        if (y_foxbot > y_bot):
-          return "sul"
-        else:
-          return "norte"
-    else:
-      if (y_foxbot > y_bot):
-        return "sul"
-      else:
-        return "norte"
+
 
 class Bot(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -46,23 +18,50 @@ class Bot(pygame.sprite.Sprite):
         self.rect.bottom = 420
         self.speedx = 10
         self.speedy = 10
-
+        self.direcao="oeste"
+    def bussola(self,x_bot, y_bot, x_foxbot, y_foxbot): 
+      if ((x_foxbot == x_bot) and (y_foxbot == y_bot)):
+        self.direcao= "achou"
+      else:
+        if (abs(x_foxbot - x_bot) > abs(y_foxbot - y_bot)):
+          if (y_foxbot > y_bot):
+            self.direcao= "sul"
+          elif (y_foxbot < y_bot):
+            self.direcao= "norte"
+          else: 
+            if (x_foxbot > x_bot):
+              self.direcao= "leste"
+            else:
+              self.direcao= "oeste"
+        elif (abs(x_foxbot - x_bot) < abs(y_foxbot - y_bot)):
+          if (x_foxbot > x_bot):
+            self.direcao= "leste"
+          elif (x_foxbot < x_bot):
+            self.direcao= "oeste"
+          else:
+            if (y_foxbot > y_bot):
+              self.direcao= "sul"
+            else:
+              self.direcao= "norte"
+        else:
+          if (y_foxbot > y_bot):
+            self.direcao= "sul"
+          else:
+            self.direcao= "norte"
     def update(self): 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-        direcao = bussola(self.rect.x, self.rect.y, foxbot.rect.x, foxbot.rect.y)
-
-        if direcao == 'norte':
+        if self.direcao == 'norte':
             self.rect.x += 0
             self.rect.y -= self.speedy
-        elif direcao == 'sul':
+        elif self.direcao == 'sul':
             self.rect.x += 0
             self.rect.y += self.speedy 
-        elif direcao == 'leste':
+        elif self.direcao == 'leste':
             self.rect.x += self.speedx
             self.rect.y += 0
-        elif direcao == 'oeste':
+        elif self.direcao == 'oeste':
             self.rect.x -= self.speedx
             self.rect.y += 0
         else:
