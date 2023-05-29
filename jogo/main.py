@@ -1,23 +1,13 @@
 import pygame
-import time
+pygame.init()
 import foxbot as foxbot
+from foxbot import Bala
 from tela_inc import game_intro
 from configuracoes import *
-pygame.init()
 from pygame.locals import *
-from foxbot import Bala
-
 clock=pygame.time.Clock()
 
-FPS= 60
-
-
-
-# personagens e classes
-
-listaBalas_Inimigo=[]
-listaBalas=[]
-#bot loop
+# classe Bot
 class Bot(pygame.sprite.Sprite):
     
     def __init__(self, img):
@@ -70,13 +60,13 @@ class Bot(pygame.sprite.Sprite):
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
-          #Colisão com a largura
+        # Colisão com a largura
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
         if self.rect.left < 0:
             self.rect.left = 0
             
-        #Colisão com a altura
+        # Colisão com a altura
         if self.rect.y > ALTURA:
             self.rect.y = ALTURA-90
         if self.rect.y < 0:
@@ -107,22 +97,22 @@ class Bot(pygame.sprite.Sprite):
     def fire(self,x,y):
             Tiro=Bala(x,y,bala_player,self.W,self.A,self.S,self.D)
             self.listaBalas_Inimigo.append(Tiro)
+
+
+# spawn do bot + posições iniciais
 bot = Bot(bot_img)
-
-W=0
-S=0
-D=1
-A=0
-
 bot.W=0
 bot.S=0
 bot.D=1
 bot.A=0
-foxbot = foxbot.Foxbot(foxbot_img,W,A,S,D)
+
+# spawn do player
+foxbot = foxbot.Foxbot(foxbot_img,W_inicial,A_inicial,S_inicial,D_inicial)
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
-balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W,A,S,D)
+
+balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,A_inicial,S_inicial,D_inicial)
 balaProjetil_Inimigo=Bala(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,bot.A)
 
 
