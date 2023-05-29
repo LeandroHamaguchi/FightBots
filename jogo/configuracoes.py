@@ -40,14 +40,8 @@ Tela_Instrucoes = pygame.transform.scale(Tela_Instrucoes,(LARGURA,ALTURA))
 
 
 
-bot_img_0 = pygame.image.load('assets/bot_K_A.png').convert_alpha()
-bot_img_0 = pygame.transform.scale(bot_img_0,(BOT_LARGURA, BOT_ALTURA))
-bot_img_W = pygame.image.load('assets/bot_K_A.png').convert_alpha()
-bot_img_W = pygame.transform.scale(bot_img_W,(BOT_LARGURA, BOT_ALTURA))
-bot_img_S = pygame.image.load('assets/bot_K_A.png').convert_alpha()
-bot_img_S = pygame.transform.scale(bot_img_S,(BOT_LARGURA, BOT_ALTURA))
-bot_img_D = pygame.image.load('assets/bot_K_A.png').convert_alpha()
-bot_img_D = pygame.transform.scale(bot_img_D,(BOT_LARGURA, BOT_ALTURA))
+bot_img= pygame.image.load('assets/bot_K_A.png').convert_alpha()
+bot_img = pygame.transform.scale(bot_img,(BOT_LARGURA, BOT_ALTURA))
 bala_player= pygame.image.load('assets/Bullet_player.png').convert_alpha()
 bala_player= pygame.transform.scale(bala_player,(BALA_LARGURA,BALA_ALTURA))
 bala_bot= pygame.image.load('assets/Bullet_enemy.png').convert_alpha()
