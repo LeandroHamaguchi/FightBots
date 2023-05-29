@@ -1,4 +1,5 @@
 import pygame
+import time
 import foxbot as foxbot
 from tela_inc import game_intro
 from configuracoes import *
@@ -200,6 +201,7 @@ while state != QUIT:
                     x,y = bot.rect.center                     
                     bot.bussola(bot.rect.x,bot.rect.y,foxbot.rect.x,foxbot.rect.y)
                     if event.type == pygame.USEREVENT:
+                        
                         bot.fire(x+45,y-5) 
                         bot.direcao()
                 bot.update()

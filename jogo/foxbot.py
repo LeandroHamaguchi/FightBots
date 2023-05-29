@@ -50,10 +50,10 @@ class Bala(pygame.sprite.Sprite):
 
     def percurso(self,W,A,S,D,imagem):
         if W == 1:
-            self.rect.top = self.rect.top-self.speedBala
+            self.rect.y -= self.speedBala
             self.ImgBala=imagem
         if S == 1:
-            self.rect.top = self.rect.top+self.speedBala
+            self.rect.y += self.speedBala
             self.ImgBala=imagem
         if A == 1:
             self.rect.x -= self.speedBala
