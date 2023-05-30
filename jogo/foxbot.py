@@ -4,7 +4,7 @@ from pygame.locals import *
 
 
 class Foxbot(pygame.sprite.Sprite):
-    def __init__(self, img,W,A,S,D):
+    def __init__(self, img,W,S):
         
         pygame.sprite.Sprite.__init__(self)
         self.image = img
@@ -14,9 +14,7 @@ class Foxbot(pygame.sprite.Sprite):
         self.speedy = 1
         self.listaBalas=[]
         self.W=W
-        self.A=A
         self.S=S
-        self.D=D
 
     def update(self):
         self.rect.x = 112.5-50
@@ -30,33 +28,26 @@ class Foxbot(pygame.sprite.Sprite):
             self.rect.y = 85
 
     def fire(self,x,y):
-            Tiro=Bala(x,y,bala_player,self.W,self.A,self.S,self.D)
+            Tiro=Bala(x,y,bala_player,self.W,self.S)
             self.listaBalas.append(Tiro)
         
 
    
 
 class Bala(pygame.sprite.Sprite):
-    def __init__(self,posx,posy,imagem,W,A,S,D):
+    def __init__(self,posx,posy,imagem,W,S):
         pygame.sprite.Sprite.__init__(self)
         self.listaBalas=[]
         self.ImgBala=pygame.transform.rotate(imagem,-90)
         self.rect = self.ImgBala.get_rect(center=(posx,posy))
         self.speedBala = 3
         self.W=W
-        self.A=A
         self.S=S
-        self.D=D
 
     def percurso(self,imagem):
         if self.W == 1:
             self.rect.x += self.speedBala
         if self.S == 1:
-            self.rect.x += self.speedBala
-        if self.A == 1:
-            self.rect.x += self.speedBala
-
-        if self.D == 1:
             self.rect.x += self.speedBala
         self.ImgBala=pygame.transform.rotate(imagem,-90)
     def insert(self,superficie):

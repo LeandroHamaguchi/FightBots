@@ -9,16 +9,14 @@ clock=pygame.time.Clock()
 
 # classe Bot
 class Bala_Bot(pygame.sprite.Sprite):
-    def __init__(self,posx,posy,imagem,W,S,A,D):
+    def __init__(self,posx,posy,imagem,W,S):
         pygame.sprite.Sprite.__init__(self)
         self.listaBalas=[]
         self.ImgBala=pygame.transform.rotate(imagem,-90)
         self.rect = self.ImgBala.get_rect(center=(posx,posy))
         self.speedBala = 3
         self.W=W
-        self.A=A
         self.S=S
-        self.D=D
 
     def percurso(self,imagem):
         if self.W == 1:
@@ -62,30 +60,12 @@ class Bot(pygame.sprite.Sprite):
             self.rect.y -= self.speedy
             bot.image=pygame.transform.rotate(bot_img,+90)
             bot.W=1
-            bot.A=0
-            bot.S=0
-            bot.D=0            
+            bot.S=0            
         if self.direcao_y == 'sul':
             self.rect.y -= self.speedy 
             bot.image=pygame.transform.rotate(bot_img,-90)
             bot.W=0
-            bot.A=0
-            bot.S=1
-            bot.D=0 
-        if self.direcao_x == 'leste':
-            self.rect.x -= self.speedx
-            bot.image=pygame.transform.rotate(bot_img,+180)
-            bot.W=0
-            bot.A=0
-            bot.S=0
-            bot.D=1 
-        if self.direcao_x == 'oeste':
-            self.rect.x -= self.speedx
-            bot.image=bot_img
-            bot.W=0
-            bot.A=1
-            bot.S=0
-            bot.D=0 
+            bot.S=1 
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
         if self.rect.left < 0:
@@ -103,7 +83,7 @@ class Bot(pygame.sprite.Sprite):
             self.rect.y = 0
     
     def fire(self,x,y):
-            Tiro=Bala_Bot(x,y,bala_player,self.W,self.A,self.S,self.D)
+            Tiro=Bala_Bot(x,y,bala_player,self.W,self.S)
             self.listaBalas_Inimigo.append(Tiro)
 
 
@@ -111,19 +91,17 @@ class Bot(pygame.sprite.Sprite):
 bot = Bot(bot_img)
 bot.W=0
 bot.S=0
-bot.D=1
-bot.A=0
 
 # spawn do player
-foxbot = foxbot.Foxbot(foxbot_img,W_inicial,A_inicial,S_inicial,D_inicial)
+foxbot = foxbot.Foxbot(foxbot_img,W_inicial,S_inicial)
 
 #sprites
 sprites = pygame.sprite.Group()
 sprites.add(foxbot)
 sprites.add(bot)
 
-balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,S_inicial,A_inicial,D_inicial)
-balaProjetil_Inimigo=Bala_Bot(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S,bot.D,bot.A)
+balaProjetil=Bala(LARGURA / 2 , ALTURA - 60,bala_player,W_inicial,S_inicial)
+balaProjetil_Inimigo=Bala_Bot(LARGURA / 2 , ALTURA - 60,bala_bot,bot.W,bot.S)
 
 
 #timer dos tiros do bot
@@ -155,9 +133,8 @@ while state != QUIT:
                             foxbot.image=pygame.transform.rotate(foxbot_img,+90)
                             foxbot.update()
                             foxbot.W=1
-                            foxbot.A=0
                             foxbot.S=0
-                            foxbot.D=0
+                            
                             #Foxbot(tecla W)
                         if event.key == pygame.K_s:
                             foxbot.speedy = 0
@@ -166,9 +143,8 @@ while state != QUIT:
                             foxbot.image=pygame.transform.rotate(foxbot_img,-90)
                             foxbot.update()
                             foxbot.W=0
-                            foxbot.A=0
                             foxbot.S=1
-                            foxbot.D=0                         
+                                                     
                             #Foxbot(tecla S)
                         if event.key == pygame.K_a:
                             foxbot.speedx = 0
@@ -177,9 +153,8 @@ while state != QUIT:
                             foxbot.image=pygame.transform.rotate(foxbot_img,-180)
                             foxbot.update()
                             foxbot.W=0
-                            foxbot.A=1
                             foxbot.S=0
-                            foxbot.D=0
+                            
                                                   
                             #Foxbot(tecla A )
                         if event.key == pygame.K_d:
@@ -189,9 +164,7 @@ while state != QUIT:
                             foxbot.image=foxbot_img
                             foxbot.update()
                             foxbot.W=0
-                            foxbot.A=0
                             foxbot.S=0
-                            foxbot.D=1
                             #Foxbot(tecla D)
   
                     if event.type == MOUSEBUTTONDOWN:
