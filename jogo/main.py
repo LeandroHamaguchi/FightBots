@@ -129,7 +129,6 @@ while state != QUIT:
                         if event.key == pygame.K_w:
                             foxbot.speedy = 0
                             foxbot.speedy -= 15
-                            foxbot.speedx = 0
                             foxbot.image=pygame.transform.rotate(foxbot_img,+90)
                             foxbot.update()
                             foxbot.W=1
@@ -139,33 +138,14 @@ while state != QUIT:
                         if event.key == pygame.K_s:
                             foxbot.speedy = 0
                             foxbot.speedy += 15
-                            foxbot.speedx = 0
                             foxbot.image=pygame.transform.rotate(foxbot_img,-90)
                             foxbot.update()
                             foxbot.W=0
                             foxbot.S=1
                                                      
                             #Foxbot(tecla S)
-                        if event.key == pygame.K_a:
-                            foxbot.speedx = 0
-                            foxbot.speedx -= 15
-                            foxbot.speedy = 0
-                            foxbot.image=pygame.transform.rotate(foxbot_img,-180)
-                            foxbot.update()
-                            foxbot.W=0
-                            foxbot.S=0
                             
-                                                  
-                            #Foxbot(tecla A )
-                        if event.key == pygame.K_d:
-                            foxbot.speedx = 0
-                            foxbot.speedx += 15
-                            foxbot.speedy = 0
-                            foxbot.image=foxbot_img
-                            foxbot.update()
-                            foxbot.W=0
-                            foxbot.S=0
-                            #Foxbot(tecla D)
+
   
                     if event.type == MOUSEBUTTONDOWN:
                        x,y = foxbot.rect.center
