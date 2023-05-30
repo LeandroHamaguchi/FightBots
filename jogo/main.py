@@ -31,8 +31,7 @@ class Bot(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = 887.5
         self.rect.bottom = 420
-        self.speedx = 0
-        self.speedy = 1
+        self.speedy = 3
         self.direcao_x=0
         self.direcao_y=0
         self.listaBalas_Inimigo=[]
