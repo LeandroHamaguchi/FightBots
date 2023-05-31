@@ -5,7 +5,6 @@ pygame.font.init()
 
 
 
-
 #configurações para a tela inicial + música de fundo
 white = (255,255,255)
 black = (0,0,0)
@@ -27,7 +26,6 @@ area_selecionavel_instrucao_hover = pygame.Rect(360, 630, 270, 100)
 
 
 def game_intro(screen):
-
 
     introduction = True
     while introduction:
@@ -290,9 +288,36 @@ WIN = 3
 BEGIN = 4
 SKIP = 5
 timer = 0
-state = BEGIN
-
+NAME_TO_START=6
+state = NAME_TO_START
+nome=''
 while state != DONE:
+    screen.fill((0, 0, 0))
+    if state == NAME_TO_START:
+        text= assets['font'].render( 'Digite seu nome: ' , True, (255, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+        screen.blit(text, text_rect)
+        for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        state = DONE
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE: 
+                            nome-=event.unicode
+                        
+                        if event.key == pygame.K_RETURN:
+                            state = BEGIN
+                        else:
+                            nome+=event.unicode
+
+        text_surface = assets['font'].render( nome , True, (255, 0, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (WIDTH / 2, HEIGHT / 2)
+        screen.blit(text_surface, text_rect)
+        
+
+        pygame.display.update()
+ 
     if state == BEGIN:
         state = game_intro(screen)
     
@@ -356,10 +381,6 @@ while state != DONE:
                 while state == GAMEOVER:
                     screen.fill((0, 0, 0))
                     screen.blit(assets['game_over'], (0, 0))
-                    #text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
-                    #text_rect = text_surface.get_rect()
-                    #text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
-                    #screen.blit(text_surface, text_rect)
                     pygame.display.update()
                     pygame.time.wait(2000)
                     for event in pygame.event.get():
@@ -379,12 +400,27 @@ while state != DONE:
                                     enemy.rect.centerx = WIDTH - 100
                                     enemy.rect.centery = HEIGHT / 2
 
+
             if state == WIN:
+   
+                with open('Tela de pontuacao.txt', 'a') as tela_tempos:
+                        if timer >= 60:
+                            tempo = '{0} eliminou o inimigo em {1} minutos'.format(nome,str(timer//60))
+                        if timer < 60:           
+                            tempo = '{0} eliminou o inimigo em {1} segundos'.format(nome,str(timer//10))
+                        tela_tempos.write(tempo)
+
+
                 text_surface = assets['font'].render('YOU WIN', True, (0, 255, 0))
                 text_rect = text_surface.get_rect()
                 text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
                 screen.blit(text_surface, text_rect)
+                
                 pygame.display.update()
                 pygame.time.wait(2000)
+
+
+            
+                
 
         pygame.quit()

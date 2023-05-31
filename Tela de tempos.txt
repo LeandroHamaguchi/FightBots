@@ -1,0 +1,1 @@
+('vini', '4 minutos')('scd c:/Users/vinic/OneDrive/Insper/Fight/fight_time', '3 minutos')ss eliminou o inimigo em 4 minutos
