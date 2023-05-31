@@ -19,7 +19,11 @@ pygame.mixer.music.play()
 
 # Defina a área selecionável
 area_selecionavel_start = pygame.Rect(360, 470, 270, 100)  # Retângulo (x, y, largura, altura)
-area_selecionavel_Instrucao = pygame.Rect(360, 630, 270, 100)  # Retângulo (x, y, largura, altura)
+area_selecionavel_instrucao = pygame.Rect(360, 630, 270, 100)  # Retângulo (x, y, largura, altura)
+
+# Áreas selecionáveis com hover
+area_selecionavel_start_hover = pygame.Rect(360, 470, 270, 100)
+area_selecionavel_instrucao_hover = pygame.Rect(360, 630, 270, 100)
 
 
 def game_intro(screen):
@@ -27,10 +31,11 @@ def game_intro(screen):
 
     introduction = True
     while introduction:
-
+        
         pygame.display.flip()
         screen.fill(black)
-        screen.blit(assets['start_screen'],(0,0))
+        screen.blit(assets['start_screen'], (0, 0))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = DONE
@@ -38,9 +43,13 @@ def game_intro(screen):
 
             if event.type == pygame.MOUSEMOTION:
                 click = pygame.mouse.get_pos()
+                
                 if area_selecionavel_start.collidepoint(click):
-                        pygame.display.flip()
-                        screen.blit(assets['screen_start_select'], (0,0))
+                    screen.blit(assets['screen_start_select'], (0, 0))
+                elif area_selecionavel_instrucao.collidepoint(click):
+                    screen.blit(assets['instructions_screen'], (0, 0))
+                else:
+                    screen.blit(assets['start_screen'], (0, 0))
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Botão esquerdo do mouse
@@ -48,22 +57,11 @@ def game_intro(screen):
                     if area_selecionavel_start.collidepoint(click):
                         state = PLAYING
                         introduction = False
-
-            if event.type == pygame.MOUSEMOTION:
-                click = pygame.mouse.get_pos()
-                if area_selecionavel_Instrucao.collidepoint(click):
-                        pygame.display.flip()
-                        screen.blit(assets['instructions_screen'],(0,0))
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # Botão esquerdo do mouse
-                    click = pygame.mouse.get_pos()
-                    if area_selecionavel_Instrucao.collidepoint(click):
+                    elif area_selecionavel_instrucao.collidepoint(click):
                         state = PLAYING
                         introduction = False
 
 
-    pygame.display.flip()
     return state
 
 
