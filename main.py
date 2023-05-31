@@ -309,11 +309,15 @@ while state != DONE:
                             state = DONE
                         if event.key == pygame.K_w:
                             #bot vai para cima
+                            player.speedy = 0
                             player.speedy -= 4
+                            enemy.speedy = 0
                             enemy.speedy -= 3
                         if event.key == pygame.K_s:
                             #bot vai para baixo
+                            player.speedy = 0
                             player.speedy += 4
+                            enemy.speedy = 0
                             enemy.speedy += 3
                         if event.key == pygame.K_SPACE:
                             player.shoot()
