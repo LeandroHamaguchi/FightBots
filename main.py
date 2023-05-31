@@ -72,7 +72,7 @@ def game_intro(screen):
 
 
 
-WIDTH = 1200
+WIDTH = 800
 HEIGHT = 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Fight in Time')
@@ -96,9 +96,9 @@ assets['player_img'] = pygame.transform.scale(assets['player_img'], (PLAYER_WIDT
 assets['enemy_img'] = pygame.image.load('enemy.png').convert_alpha()
 assets['enemy_img'] = pygame.transform.scale(assets['enemy_img'], (PLAYER_WIDTH, PLAYER_HEIGHT))
 assets['bullet_img'] = pygame.image.load('bullet_img.png').convert_alpha()
-assets['bullet_img'] = pygame.transform.scale(assets['bullet_img'], (20, 20))
+assets['bullet_img'] = pygame.transform.scale(assets['bullet_img'], (60, 60))
 assets['enemy_bullet_img'] = pygame.image.load('enemy_bullet.png').convert_alpha()
-assets['enemy_bullet_img'] = pygame.transform.scale(assets['enemy_bullet_img'], (20, 20))
+assets['enemy_bullet_img'] = pygame.transform.scale(assets['enemy_bullet_img'], (80, 80))
 #assets['explosion_img'] = pygame.image.load('explosion.png').convert_alpha()
 #assets['explosion_img'] = pygame.transform.scale(assets['explosion_img'], (100, 100))
 assets['font'] = pygame.font.Font('valorax-font/Valorax-lg25V.otf', 28)
