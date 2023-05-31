@@ -99,6 +99,8 @@ assets['bullet_img'] = pygame.image.load('bullet_img.png').convert_alpha()
 assets['bullet_img'] = pygame.transform.scale(assets['bullet_img'], (60, 60))
 assets['enemy_bullet_img'] = pygame.image.load('enemy_bullet.png').convert_alpha()
 assets['enemy_bullet_img'] = pygame.transform.scale(assets['enemy_bullet_img'], (80, 80))
+assets['game_over'] = pygame.image.load('gameover.png').convert_alpha()
+assets['game_over'] = pygame.transform.scale(assets['game_over'], (WIDTH, HEIGHT))
 #assets['explosion_img'] = pygame.image.load('explosion.png').convert_alpha()
 #assets['explosion_img'] = pygame.transform.scale(assets['explosion_img'], (100, 100))
 assets['font'] = pygame.font.Font('valorax-font/Valorax-lg25V.otf', 28)
@@ -350,10 +352,12 @@ while state != DONE:
 
             if state == GAMEOVER:
                 while state == GAMEOVER:
-                    text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
-                    text_rect = text_surface.get_rect()
-                    text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
-                    screen.blit(text_surface, text_rect)
+                    screen.fill((0, 0, 0))
+                    screen.blit(assets['game_over'], (0, 0))
+                    #text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
+                    #text_rect = text_surface.get_rect()
+                    #text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+                    #screen.blit(text_surface, text_rect)
                     pygame.display.update()
                     pygame.time.wait(2000)
                     for event in pygame.event.get():
