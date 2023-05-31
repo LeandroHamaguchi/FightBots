@@ -77,10 +77,10 @@ HEIGHT = 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Fight in Time')
 
-PLAYER_WIDTH = 50
-PLAYER_HEIGHT = 50
-ENEMY_WIDTH = 50
-ENEMY_HEIGHT = 50
+PLAYER_WIDTH = 200
+PLAYER_HEIGHT = 200
+ENEMY_WIDTH = 200
+ENEMY_HEIGHT = 200
 assets = {}
 
 assets['background'] = pygame.image.load('background.png').convert()
@@ -179,7 +179,7 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.bottom = 0 + ENEMY_HEIGHT
 
     def shoot(self):
-        #assets['shoot_sound'].play()
+        assets['shoot_sound'].play()
         new_shot_timer = pygame.time.get_ticks()
         
         if new_shot_timer - self.shot_timer > self.timer_limit:
