@@ -1,7 +1,77 @@
 import pygame
-
 pygame.init()
 pygame.mixer.init()
+pygame.font.init()
+
+
+
+
+
+
+white = (255,255,255)
+black = (0,0,0)
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None,235)
+texto = font.render('FIGHT BOTS',True,white)
+musica_fundo = pygame.mixer.music.load('soundtrack.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play()
+
+
+# Defina a área selecionável
+area_selecionavel_start = pygame.Rect(360, 470, 270, 100)  # Retângulo (x, y, largura, altura)
+area_selecionavel_Instrucao = pygame.Rect(360, 630, 270, 100)  # Retângulo (x, y, largura, altura)
+
+
+def game_intro(screen):
+
+
+    introduction = True
+    while introduction:
+
+        pygame.display.flip()
+        screen.fill(black)
+        screen.blit(assets['start_screen'],(0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                state = DONE
+                introduction = False
+
+            if event.type == pygame.MOUSEMOTION:
+                click = pygame.mouse.get_pos()
+                if area_selecionavel_start.collidepoint(click):
+                        pygame.display.flip()
+                        screen.blit(assets['screen_start_select'], (0,0))
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Botão esquerdo do mouse
+                    click = pygame.mouse.get_pos()
+                    if area_selecionavel_start.collidepoint(click):
+                        state = PLAYING
+                        introduction = False
+
+            if event.type == pygame.MOUSEMOTION:
+                click = pygame.mouse.get_pos()
+                if area_selecionavel_Instrucao.collidepoint(click):
+                        pygame.display.flip()
+                        screen.blit(assets['instructions_screen'],(0,0))
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Botão esquerdo do mouse
+                    click = pygame.mouse.get_pos()
+                    if area_selecionavel_Instrucao.collidepoint(click):
+                        state = PLAYING
+                        introduction = False
+
+
+    pygame.display.flip()
+    return state
+
+
+
+
+
+
 
 WIDTH = 1200
 HEIGHT = 800
@@ -13,8 +83,15 @@ PLAYER_HEIGHT = 50
 ENEMY_WIDTH = 50
 ENEMY_HEIGHT = 50
 assets = {}
+
 assets['background'] = pygame.image.load('background.png').convert()
 assets['background'] = pygame.transform.scale(assets['background'], (WIDTH, HEIGHT))
+assets['start_screen'] = pygame.image.load('Tela_Intro.png').convert()
+assets['start_screen'] = pygame.transform.scale(assets['start_screen'], (WIDTH, HEIGHT))
+assets['instructions_screen'] = pygame.image.load('instructions_scren.png').convert()
+assets['instructions_screen'] = pygame.transform.scale(assets['instructions_screen'], (WIDTH, HEIGHT))
+assets['screen_start_select'] = pygame.image.load('screen_start_select.png').convert()
+assets['screen_start_select'] = pygame.transform.scale(assets['screen_start_select'], (WIDTH, HEIGHT))
 assets['player_img'] = pygame.image.load('player.png').convert_alpha()
 assets['player_img'] = pygame.transform.scale(assets['player_img'], (PLAYER_WIDTH, PLAYER_HEIGHT))
 assets['enemy_img'] = pygame.image.load('enemy.png').convert_alpha()
@@ -206,95 +283,103 @@ enemy_shot = EnemyBullet(assets, enemy.rect.top, enemy.rect.centerx)
 all_sprites.add(player)
 all_sprites.add(enemy)
 
+
 DONE = 0
 PLAYING = 1
 GAMEOVER = 2
 WIN = 3
-state = PLAYING
+BEGIN = 4
+SKIP = 5
 timer = 0
+state = BEGIN
 
-while state == PLAYING:
-    clock.tick(FPS)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            state = DONE
-        if state == PLAYING:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    state = DONE
-                if event.key == pygame.K_w:
-                    #bot vai para cima
-                    player.speedy -= 4
-                    enemy.speedy -= 3
-                if event.key == pygame.K_s:
-                    #bot vai para baixo
-                    player.speedy += 4
-                    enemy.speedy += 3
-                if event.key == pygame.K_SPACE:
-                    player.shoot()
-
-    enemy.shoot()
-    all_sprites.update()
-
-    if player.health <= 0:
-        state = GAMEOVER
-    if enemy.health <= 0:
-        state = WIN
-
-    screen.fill((0, 0, 0))
-    screen.blit(assets['background'], (0, 0))
-    all_sprites.draw(screen)
-
-    timer += 1
-    score_font_surface = assets['font'].render("{:2d}".format(timer), True, (255, 255, 0))
-    text_rect = score_font_surface.get_rect()
-    text_rect.midtop = (WIDTH / 2,  10)
-    screen.blit(score_font_surface, text_rect)
-
-    lives_font_surface = assets['font'].render("{:01d}".format(player.health), True, (255, 255, 0))
-    text_rect = lives_font_surface.get_rect()
-    text_rect.bottomleft = (10, HEIGHT - 10)
-    screen.blit(lives_font_surface, text_rect)
-
-    lives_font_surface = assets['font'].render("{:01d}".format(enemy.health), True, (255, 255, 0))
-    text_rect = lives_font_surface.get_rect()
-    text_rect.bottomleft = (WIDTH - 80, HEIGHT - 10)
-    screen.blit(lives_font_surface, text_rect)
+while state != DONE:
+    if state == BEGIN:
+        state = game_intro(screen)
     
-    pygame.display.update()
+    if state == PLAYING:
+        while state == PLAYING:
+            clock.tick(FPS)
 
-    if state == GAMEOVER:
-        while state == GAMEOVER:
-            text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
-            text_rect = text_surface.get_rect()
-            text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
-            screen.blit(text_surface, text_rect)
-            pygame.display.update()
-            pygame.time.wait(2000)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     state = DONE
-                if state == GAMEOVER:
+                if state == PLAYING:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             state = DONE
+                        if event.key == pygame.K_w:
+                            #bot vai para cima
+                            player.speedy -= 4
+                            enemy.speedy -= 3
+                        if event.key == pygame.K_s:
+                            #bot vai para baixo
+                            player.speedy += 4
+                            enemy.speedy += 3
                         if event.key == pygame.K_SPACE:
-                            state = PLAYING
-                            player.health = 100
-                            enemy.health = 30
-                            score = 0
-                            player.rect.centerx = 100
-                            player.rect.centery = HEIGHT / 2
-                            enemy.rect.centerx = WIDTH - 100
-                            enemy.rect.centery = HEIGHT / 2
+                            player.shoot()
 
-    if state == WIN:
-        text_surface = assets['font'].render('YOU WIN', True, (0, 255, 0))
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
-        screen.blit(text_surface, text_rect)
-        pygame.display.update()
-        pygame.time.wait(2000)
+            enemy.shoot()
+            all_sprites.update()
 
-pygame.quit()
+            if player.health <= 0:
+                state = GAMEOVER
+            if enemy.health <= 0:
+                state = WIN
+
+            screen.fill((0, 0, 0))
+            screen.blit(assets['background'], (0, 0))
+            all_sprites.draw(screen)
+
+            timer += 1
+            score_font_surface = assets['font'].render("{:2d}".format(timer), True, (255, 255, 0))
+            text_rect = score_font_surface.get_rect()
+            text_rect.midtop = (WIDTH / 2,  10)
+            screen.blit(score_font_surface, text_rect)
+
+            lives_font_surface = assets['font'].render("{:01d}".format(player.health), True, (255, 255, 0))
+            text_rect = lives_font_surface.get_rect()
+            text_rect.bottomleft = (10, HEIGHT - 10)
+            screen.blit(lives_font_surface, text_rect)
+
+            lives_font_surface = assets['font'].render("{:01d}".format(enemy.health), True, (255, 255, 0))
+            text_rect = lives_font_surface.get_rect()
+            text_rect.bottomleft = (WIDTH - 80, HEIGHT - 10)
+            screen.blit(lives_font_surface, text_rect)
+            
+            pygame.display.update()
+
+            if state == GAMEOVER:
+                while state == GAMEOVER:
+                    text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
+                    text_rect = text_surface.get_rect()
+                    text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+                    screen.blit(text_surface, text_rect)
+                    pygame.display.update()
+                    pygame.time.wait(2000)
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            state = DONE
+                        if state == GAMEOVER:
+                            if event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_ESCAPE:
+                                    state = DONE
+                                if event.key == pygame.K_SPACE:
+                                    state = PLAYING
+                                    player.health = 100
+                                    enemy.health = 30
+                                    score = 0
+                                    player.rect.centerx = 100
+                                    player.rect.centery = HEIGHT / 2
+                                    enemy.rect.centerx = WIDTH - 100
+                                    enemy.rect.centery = HEIGHT / 2
+
+            if state == WIN:
+                text_surface = assets['font'].render('YOU WIN', True, (0, 255, 0))
+                text_rect = text_surface.get_rect()
+                text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+                screen.blit(text_surface, text_rect)
+                pygame.display.update()
+                pygame.time.wait(2000)
+
+        pygame.quit()
