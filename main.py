@@ -6,14 +6,13 @@ pygame.font.init()
 
 
 
-
-
+#configurações para a tela inicial + música de fundo
 white = (255,255,255)
 black = (0,0,0)
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None,235)
 texto = font.render('FIGHT BOTS',True,white)
-musica_fundo = pygame.mixer.music.load('soundtrack.mp3')
+soundtrack = pygame.mixer.music.load('soundtrack.mp3')
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play()
 
@@ -105,7 +104,7 @@ assets['enemy_bullet_img'] = pygame.transform.scale(assets['enemy_bullet_img'], 
 assets['font'] = pygame.font.Font('valorax-font/Valorax-lg25V.otf', 28)
 
 #assets['explosion_sound'] = pygame.mixer.Sound('assets/snd/explosion.wav')
-#assets['shoot_sound'] = pygame.mixer.Sound('assets/snd/shoot.wav')
+assets['shoot_sound'] = pygame.mixer.Sound('shoot.wav')
 #assets['enemy_shoot_sound'] = pygame.mixer.Sound('assets/snd/enemy_shoot.wav')
 #assets['music'] = pygame.mixer.music.load('assets/snd/music.mp3')
 
@@ -140,7 +139,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = 0 + PLAYER_HEIGHT            
 
     def shoot(self):
-        #assets['shoot_sound'].play()
+        assets['shoot_sound'].play()
         new_shot_timer = pygame.time.get_ticks()
         
         if new_shot_timer - self.shot_timer > self.timer_limit:
