@@ -15,7 +15,7 @@ ENEMY_HEIGHT = 50
 assets = {}
 assets['background'] = pygame.image.load('background.png').convert()
 assets['background'] = pygame.transform.scale(assets['background'], (WIDTH, HEIGHT))
-assets['player_img'] = pygame.image.load('player_teste.png').convert_alpha()
+assets['player_img'] = pygame.image.load('player.png').convert_alpha()
 assets['player_img'] = pygame.transform.scale(assets['player_img'], (PLAYER_WIDTH, PLAYER_HEIGHT))
 assets['enemy_img'] = pygame.image.load('enemy.png').convert_alpha()
 assets['enemy_img'] = pygame.transform.scale(assets['enemy_img'], (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -45,12 +45,12 @@ class Player(pygame.sprite.Sprite):
         self.speedy = 0
         self.groups = groups
         self.assets = assets
+        self.health = 100
 
         self.shot_timer = pygame.time.get_ticks()
         self.timer_limit = 50
 
     def update(self):
-        self.rect.x += self.speedx
         self.rect.y += self.speedy
 
         if self.rect.right > WIDTH:
@@ -85,12 +85,12 @@ class Enemy(pygame.sprite.Sprite):
         self.speedy = 0
         self.groups = groups
         self.assets = assets
+        self.health = 100
 
         self.shot_timer = pygame.time.get_ticks()
         self.timer_limit = 40
 
     def update(self):
-        self.rect.x += self.speedx
         self.rect.y += self.speedy
 
         if self.rect.right > WIDTH:
@@ -137,6 +137,7 @@ class PlayerBullet(pygame.sprite.Sprite):
             self.kill()
         if pygame.sprite.collide_mask(self, enemy):
             self.kill()
+            enemy.health -= 10
             #assets['explosion_sound'].play()
             #explosion = Explosion(enemy.rect.center, assets)
             #all_sprites.add(explosion)
@@ -162,39 +163,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.assets = assets
 
     def update(self):
-        if player.speedx > 0:
-            if player.speedy > 0:
-                self.speedx = self.shot_speed
-                self.speedy = -self.shot_speed
-            elif player.speedy < 0:
-                self.speedx = self.shot_speed
-                self.speedy = self.shot_speed
-            else:
-                self.speedx = self.shot_speed
-                self.speedy = 0
-        elif player.speedx < 0:
-            if player.speedy > 0:
-                self.speedx = -self.shot_speed
-                self.speedy = -self.shot_speed
-            elif player.speedy < 0:
-                self.speedx = -self.shot_speed
-                self.speedy = self.shot_speed
-            else:
-                self.speedx = -self.shot_speed
-                self.speedy = 0
-        else:
-            if player.speedy > 0:
-                self.speedx = 0
-                self.speedy = -self.shot_speed
-            elif player.speedy < 0:
-                self.speedx = 0
-                self.speedy = self.shot_speed
-            else:
-                self.speedx = 0
-                self.speedy = 0
-
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        self.rect.x -= self.speedx
 
         if self.rect.right > WIDTH:
             self.kill()
@@ -206,6 +175,7 @@ class EnemyBullet(pygame.sprite.Sprite):
             self.kill()
         if pygame.sprite.collide_mask(self, player):
             self.kill()
+            player.health -= 10
             #assets['explosion_sound'].play()
             #explosion = Explosion(enemy.rect.center, assets)
             #all_sprites.add(explosion)
@@ -219,7 +189,7 @@ class EnemyBullet(pygame.sprite.Sprite):
 #pygame.mixer.music.set_volume(0.4)
 #pygame.mixer.music.play(loops=-1)
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 25
 
 all_sprites = pygame.sprite.Group()
 all_enemy_shots = pygame.sprite.Group()
@@ -239,11 +209,9 @@ all_sprites.add(enemy)
 DONE = 0
 PLAYING = 1
 GAMEOVER = 2
+WIN = 3
 state = PLAYING
-
-score = 0
-player_lives = 100
-enemy_lives = 100
+timer = 0
 
 while state == PLAYING:
     clock.tick(FPS)
@@ -259,84 +227,74 @@ while state == PLAYING:
                     #bot vai para cima
                     player.speedy -= 4
                     enemy.speedy -= 3
-                    assets['player_img_w'] = 0
-                    if player.image == assets['player_img_w']:
-                        pass
-                    else:
-                        assets['player_img_w'] = pygame.transform.rotate(player.image, 90)
-                        player.image = assets['player_img_w']
                 if event.key == pygame.K_s:
                     #bot vai para baixo
                     player.speedy += 4
                     enemy.speedy += 3
-                    assets['player_img_s'] = 0
-                    if player.image == assets['player_img_s']:
-                        pass
-                    else:
-                        assets['player_img_s'] = pygame.transform.rotate(player.image, -90)
-                        player.image = assets['player_img_s']
-                if event.key == pygame.K_a:
-                    #bot vai para esquerda
-                    player.speedx -= 4
-                    enemy.speedx -= 3
-                    assets['player_img_a'] = 0
-                    if player.image == assets['player_img_a']:
-                        pass
-                    else:
-                        assets['player_img_a'] = pygame.transform.rotate(player.image, 180)
-                        player.image = assets['player_img_a']
-                if event.key == pygame.K_d:
-                    #bot vai para direita
-                    player.speedx += 4
-                    enemy.speedx += 3
-                    assets['player_img'] = pygame.transform.rotate(player.image, 0)
-                    player.image = assets['player_img']
                 if event.key == pygame.K_SPACE:
-                    if player.speedx == 0 and player.speedy < 0:
-                        player.shoot()
-                    elif player.speedx == 0 and player.speedy > 0:
-                        player.shoot()
-                    elif player.speedx < 0 and player.speedy == 0:
-                        player.shoot()
-                    elif player.speedx > 0 and player.speedy == 0:
-                        player.shoot()
+                    player.shoot()
 
     enemy.shoot()
     all_sprites.update()
 
-    enemy_hit_box = pygame.sprite.spritecollide(enemy, all_player_shots, True)
-    if len(enemy_hit_box) > 0:
-        for hit in enemy_hit_box:
-            all_sprites.remove(hit)
-            all_player_shots.remove(hit)
-            enemy_lives -= 10
-
-    player_hit_box = pygame.sprite.spritecollide(player, all_enemy_shots, True)
-    if len(player_hit_box) > 0:
-        for hit in player_hit_box:
-            all_sprites.remove(hit)
-            all_enemy_shots.remove(hit)
-            player_lives -= 10
+    if player.health <= 0:
+        state = GAMEOVER
+    if enemy.health <= 0:
+        state = WIN
 
     screen.fill((0, 0, 0))
     screen.blit(assets['background'], (0, 0))
-
     all_sprites.draw(screen)
 
-    score += 1
-    score_font_surface = assets['font'].render("{:010d}".format(score), True, (255, 255, 0))
+    timer += 1
+    score_font_surface = assets['font'].render("{:2d}".format(timer), True, (255, 255, 0))
     text_rect = score_font_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  10)
     screen.blit(score_font_surface, text_rect)
 
-    lives_font_surface = assets['font'].render("{:01d}".format(player_lives), True, (255, 255, 0))
+    lives_font_surface = assets['font'].render("{:01d}".format(player.health), True, (255, 255, 0))
     text_rect = lives_font_surface.get_rect()
     text_rect.bottomleft = (10, HEIGHT - 10)
     screen.blit(lives_font_surface, text_rect)
 
-    lives_font_surface = assets['font'].render("{:01d}".format(enemy_lives), True, (255, 255, 0))
+    lives_font_surface = assets['font'].render("{:01d}".format(enemy.health), True, (255, 255, 0))
     text_rect = lives_font_surface.get_rect()
     text_rect.bottomleft = (WIDTH - 80, HEIGHT - 10)
     screen.blit(lives_font_surface, text_rect)
     
     pygame.display.update()
+
+    if state == GAMEOVER:
+        while state == GAMEOVER:
+            text_surface = assets['font'].render('GAME OVER', True, (255, 0, 0))
+            text_rect = text_surface.get_rect()
+            text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+            screen.blit(text_surface, text_rect)
+            pygame.display.update()
+            pygame.time.wait(2000)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    state = DONE
+                if state == GAMEOVER:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            state = DONE
+                        if event.key == pygame.K_SPACE:
+                            state = PLAYING
+                            player.health = 100
+                            enemy.health = 30
+                            score = 0
+                            player.rect.centerx = 100
+                            player.rect.centery = HEIGHT / 2
+                            enemy.rect.centerx = WIDTH - 100
+                            enemy.rect.centery = HEIGHT / 2
+
+    if state == WIN:
+        text_surface = assets['font'].render('YOU WIN', True, (0, 255, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (WIDTH / 2, HEIGHT / 4)
+        screen.blit(text_surface, text_rect)
+        pygame.display.update()
+        pygame.time.wait(2000)
+
+pygame.quit()
