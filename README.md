@@ -1,9 +1,9 @@
-# Fight Bots
-### Por Leandro Hamaguchi, João Eduardo e Vinicius Miranda
+#Fight Bots
+###Por Leandro Hamaguchi, João Eduardo e Vinicius Miranda
 
 Esse é o **Fight Bots**, jogo desenvolvido por alunos do curso de engenharia do Insper em São Paulo. 
 
-Fight Bots é um jogo de luta 2D. Você é o FoxBot e seu objetivo é derrotar o Bot inimigo e impedir sua invasão!
+Fight Bots é um jogo de luta 2D. Você é o FoxBot e seu objetivo é derrotar o Bot inimigo e impedir sua invasão o mais rápido possível!
 
 Para rodar o jogo basta seguir os seguintes passos:
 1. Clone esse repositório em um editor de código (recomendamos o VS Code);
@@ -12,5 +12,4 @@ Para rodar o jogo basta seguir os seguintes passos:
 4. Use a tecla **"W"** para mover para cima, **"S"** para mover para baixo e a tecla **"Espaço"** para atirar.
 5. Derrote o oponente no menor tempo possível!
 
-O vídeo abaixo explica mais como o jogo funciona:
-**https://youtu.be/GMg5e9HYKsQ**
+O vídeo ao lado explica mais como o jogo funciona: **https://youtu.be/GMg5e9HYKsQ**
