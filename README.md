@@ -13,4 +13,4 @@ Para rodar o jogo basta seguir os seguintes passos:
 5. Derrote o oponente no menor tempo possível!
 
 O vídeo abaixo explica mais como o jogo funciona:
-https://youtu.be/GMg5e9HYKsQ
+**https://youtu.be/GMg5e9HYKsQ**

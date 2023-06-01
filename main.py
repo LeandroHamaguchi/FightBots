@@ -390,7 +390,7 @@ while state != DONE:
             
             #Verificando vitória
             if state == WIN:
-                with open('Tela de pontuacao.txt', 'a') as tela_tempos:
+                with open('leaderboard.txt', 'a') as tela_tempos:
                         if timer >= 600:
                             tempo = '{0} eliminou o inimigo em {1} minutos'.format(nome,str(timer//60))
                         if timer < 600:           
