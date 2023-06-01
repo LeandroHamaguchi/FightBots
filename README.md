@@ -1,5 +1,5 @@
-#Fight Bots
-###Por Leandro Hamaguchi, João Eduardo e Vinicius Miranda
+# Fight Bots
+### Por Leandro Hamaguchi, João Eduardo e Vinicius Miranda
 
 Esse é o **Fight Bots**, jogo desenvolvido por alunos do curso de engenharia do Insper em São Paulo. 
 
